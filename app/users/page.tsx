@@ -1,12 +1,13 @@
-import { createUser } from "./actions";
+import Layout from "./_components/Layout";
+import UsersList from "./_components/UsersList";
+import CreateUserForm from "./_components/CreateUserForm";
 
 const Users = () => {
   return (
-    <form action={createUser}>
-      <input name="email" placeholder="email" />
-      <input name="password" placeholder="password" />
-      <button>create user</button>
-    </form>
+    <Layout>
+      <CreateUserForm />
+      <UsersList />
+    </Layout>
   );
 };
 
