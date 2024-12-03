@@ -48,7 +48,7 @@ const Dashboard = async (props: {
       </Link>
       <h2>Документы</h2>
       <span>
-        Найдено <b>{count}</b> документов по запросу
+        Найдено <b>{count}</b> документов
       </span>
       <FiltersPanel />
       <ul>

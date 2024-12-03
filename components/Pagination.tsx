@@ -1,14 +1,13 @@
 "use client";
 
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
-import { ChangeEvent } from "react";
 
 const Pagination = ({ maxPages }: { maxPages: number }) => {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const { replace } = useRouter();
 
-  const page = Number(searchParams.get("page")) || 0;
+  const page = Number(searchParams.get("page")) || 1;
 
   const nextPage = () => {
     const params = new URLSearchParams(searchParams);
@@ -26,13 +25,15 @@ const Pagination = ({ maxPages }: { maxPages: number }) => {
     replace(pathname + "?" + params.toString());
   };
 
+  if (maxPages === 1) return;
+
   return (
     <nav>
-      <button disabled={!page} onClick={prevPage}>
+      <button disabled={page <= 1} onClick={prevPage}>
         {"<"}
       </button>
       <span>{page}</span>
-      <button disabled={page === maxPages - 1} onClick={nextPage}>
+      <button disabled={page >= maxPages - 1} onClick={nextPage}>
         {">"}
       </button>
     </nav>
