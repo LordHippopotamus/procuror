@@ -38,7 +38,6 @@ const Home = async (props: {
 
   return (
     <div>
-      <h1>Панель управления</h1>
       <h2>Документы</h2>
       <span>
         Найдено <b>{count}</b> документов
