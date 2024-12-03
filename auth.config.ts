@@ -1,5 +1,9 @@
 import Credentials from "next-auth/providers/credentials";
-import { CredentialsSignin, type NextAuthConfig } from "next-auth";
+import {
+  CredentialsSignin,
+  DefaultSession,
+  type NextAuthConfig,
+} from "next-auth";
 import bcrypt from "bcryptjs";
 import * as v from "valibot";
 import { prisma } from "./prisma";
@@ -36,4 +40,16 @@ export default {
       },
     }),
   ],
+  callbacks: {
+    jwt({ token, user }) {
+      if (user?.id) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    session({ session, token }) {
+      session.user.id = token.id;
+      return session;
+    },
+  },
 } satisfies NextAuthConfig;

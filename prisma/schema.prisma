@@ -5,6 +5,7 @@ datasource db {
  
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearchPostgres"]
 }
  
 model User {
@@ -16,6 +17,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  documents     Document[]
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  
@@ -76,4 +78,13 @@ model Authenticator {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
  
   @@id([userId, credentialID])
+}
+
+model Document {
+  id            String          @id @default(cuid())
+  title         String
+  content       String          
+  timestamp     DateTime        @default(now())
+  userId        String
+  user          User            @relation(fields: [userId], references: [id], onDelete: NoAction)
 }
