@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     const password = formData.get("password");
-    const isPasswordMatch = await comparePassword(password);
+    const isPasswordMatch = await comparePassword(String(password));
     if (isPasswordMatch) {
       setIsAuthorized(true);
       setError("");

@@ -1,5 +1,6 @@
 "use client";
 
+import { Field, Fieldset, Input, Label, Legend } from "@headlessui/react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { ChangeEvent, ChangeEventHandler } from "react";
 
@@ -36,23 +37,40 @@ const FiltersPanel = () => {
 
   return (
     <nav>
-      <input
-        name="title"
-        onChange={handleChange}
-        defaultValue={searchParams.get("title") || ""}
-      />
-      <input
-        name="dateMin"
-        onChange={handleChange}
-        type="date"
-        defaultValue={searchParams.get("dateMin") || ""}
-      />
-      <input
-        name="dateMax"
-        onChange={handleChange}
-        type="date"
-        defaultValue={searchParams.get("dateMax") || ""}
-      />
+      <Fieldset className="bg-slate-300 shadow-xl rounded-lg mx-auto p-4">
+        <Legend className="text-xl font-bold">Фильтры</Legend>
+        <div className="flex gap-2 flex-wrap">
+          <Field className="flex flex-col grow">
+            <Label>Название</Label>
+            <Input
+              name="title"
+              onChange={handleChange}
+              defaultValue={searchParams.get("title") || ""}
+              className="border-slate-400 rounded-md px-4 py-2 border bg-white focus:outline focus:outline-slate-800"
+            />
+          </Field>
+          <Field className="flex flex-col">
+            <Label>После</Label>
+            <Input
+              name="dateMin"
+              onChange={handleChange}
+              type="date"
+              defaultValue={searchParams.get("dateMin") || ""}
+              className="border-slate-400 rounded-md px-4 py-2 border bg-white focus:outline focus:outline-slate-800"
+            />
+          </Field>
+          <Field className="flex flex-col">
+            <Label>До</Label>
+            <Input
+              name="dateMax"
+              onChange={handleChange}
+              type="date"
+              defaultValue={searchParams.get("dateMax") || ""}
+              className="border-slate-400 rounded-md px-4 py-2 border bg-white focus:outline focus:outline-slate-800"
+            />
+          </Field>
+        </div>
+      </Fieldset>
     </nav>
   );
 };

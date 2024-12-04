@@ -2,6 +2,8 @@ import { prisma } from "@/prisma";
 import Link from "next/link";
 import FiltersPanel from "@/components/FiltersPanel";
 import Pagination from "@/components/Pagination";
+import { auth } from "@/auth";
+import { Button } from "@headlessui/react";
 
 const Home = async (props: {
   searchParams: Promise<{
@@ -11,6 +13,7 @@ const Home = async (props: {
     page?: string;
   }>;
 }) => {
+  const session = await auth();
   const itemsPerPage = 20;
 
   const searchParams = await props.searchParams;
@@ -32,26 +35,43 @@ const Home = async (props: {
     select: { id: true, title: true, timestamp: true },
     orderBy: { timestamp: "desc" },
     where: filters,
-    skip: Number(searchParams.page) * itemsPerPage || 0,
+    skip: Number(searchParams.page)
+      ? (Number(searchParams.page) - 1) * itemsPerPage
+      : 0,
     take: itemsPerPage,
   });
 
   return (
-    <div>
-      <h2>Документы</h2>
-      <span>
-        Найдено <b>{count}</b> документов
-      </span>
+    <div className="mx-auto my-8 px-2 max-w-4xl">
+      <div className="mb-4 flex flex-col justify-end">
+        <h2 className="font-bold text-4xl">Документы</h2>
+        <span>
+          Найдено <b>{count}</b> документов
+        </span>
+      </div>
       <FiltersPanel />
-      <ul>
+      {session?.user && (
+        <Link href="/create">
+          <Button className="mt-4 p-4 bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-slate-100 transition rounded w-full">
+            Создать документ
+          </Button>
+        </Link>
+      )}
+      {!count && (
+        <p className="font-bold text-lg mt-4 text-center">
+          По вашему запросу не найдено документов
+        </p>
+      )}
+      <ul className="flex flex-col gap-2 my-4">
         {documents.map((el) => (
-          <li key={el.id}>
-            <h3>{el.title}</h3>
-            <span>{el.timestamp.toLocaleDateString()}</span>
-            <Link href={"/" + el.id}>
-              <button>Подробнее</button>
-            </Link>
-          </li>
+          <Link href={"/" + el.id} key={el.id}>
+            <li className="bg-slate-200 shadow-xl p-4 rounded-lg hover:bg-slate-300 active:bg-slate-400 cursor-pointer">
+              <h3>{el.title}</h3>
+              <span className="font-bold tracking-widest">
+                {el.timestamp.toLocaleDateString()}
+              </span>
+            </li>
+          </Link>
         ))}
       </ul>
       <Pagination maxPages={Math.ceil(count / itemsPerPage)} />

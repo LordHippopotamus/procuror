@@ -1,20 +1,16 @@
 import Credentials from "next-auth/providers/credentials";
-import {
-  CredentialsSignin,
-  DefaultSession,
-  type NextAuthConfig,
-} from "next-auth";
+import { CredentialsSignin, type NextAuthConfig } from "next-auth";
 import bcrypt from "bcryptjs";
 import * as v from "valibot";
 import { prisma } from "./prisma";
 import { CreadentialsSchema } from "./lib/credentialsSchema";
 
 class UserNotFountError extends CredentialsSignin {
-  code = "User not found";
+  code = "UserNotFound";
 }
 
 class InvalidPasswordError extends CredentialsSignin {
-  code = "Invalid password";
+  code = "InvalidPassword";
 }
 
 export default {
@@ -51,5 +47,9 @@ export default {
       session.user.id = token.id;
       return session;
     },
+  },
+  pages: {
+    signIn: "/auth",
+    error: "/auth",
   },
 } satisfies NextAuthConfig;
