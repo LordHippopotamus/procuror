@@ -42,12 +42,25 @@ const Home = async (props: {
   });
 
   return (
-    <div className="mx-auto my-8 px-2 max-w-4xl">
+    <>
       <div className="mb-4 flex flex-col justify-end">
         <h2 className="font-bold text-4xl">Документы</h2>
-        <span>
-          Найдено <b>{count}</b> документов
-        </span>
+        {count % 10 === 1 && (
+          <span>
+            Найден <b>{count}</b> документ
+          </span>
+        )}
+        {count % 10 >= 2 && count % 10 <= 4 && (
+          <span>
+            Найдено <b>{count}</b> документа
+          </span>
+        )}
+        {(count % 10 >= 5 && count % 10 <= 9) ||
+          (count % 10 == 0 && (
+            <span>
+              Найдено <b>{count}</b> документов
+            </span>
+          ))}
       </div>
       <FiltersPanel />
       {session?.user && (
@@ -59,7 +72,7 @@ const Home = async (props: {
       )}
       {!count && (
         <p className="font-bold text-lg mt-4 text-center">
-          По вашему запросу не найдено документов
+          По вашему запросу ничего не найдено
         </p>
       )}
       <ul className="flex flex-col gap-2 my-4">
@@ -75,7 +88,7 @@ const Home = async (props: {
         ))}
       </ul>
       <Pagination maxPages={Math.ceil(count / itemsPerPage)} />
-    </div>
+    </>
   );
 };
 

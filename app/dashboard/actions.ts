@@ -20,8 +20,3 @@ export const createUser = async (formData: FormData) => {
 
   revalidatePath("/users");
 };
-
-export const comparePassword = async (password: string) => {
-  "use server";
-  return password === process.env.ADMIN_PASSWORD;
-};

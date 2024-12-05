@@ -17,7 +17,7 @@ const Layout = ({
     <body className="bg-white text-slate-800">
       <SessionProvider>
         <Navigation />
-        {children}
+        <div className="mx-auto my-8 px-2 max-w-4xl">{children}</div>
       </SessionProvider>
     </body>
   </html>

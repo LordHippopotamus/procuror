@@ -15,7 +15,7 @@ const DocumentEditor = ({
   defaultValues?: { title: string; content: string; timestamp: Date };
 }) => {
   return (
-    <form action={formAction} className="px-2 mx-auto max-w-4xl my-8">
+    <form action={formAction}>
       <Fieldset className="flex flex-col gap-2">
         <Legend className="text-2xl font-bold">Редактирование документа</Legend>
 

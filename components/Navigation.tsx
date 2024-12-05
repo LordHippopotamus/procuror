@@ -22,6 +22,13 @@ const Navigation = () => {
           >
             Выйти
           </Button>
+          {data.user?.role === "admin" && (
+            <Link href="/dashboard">
+              <Button className="rounded-md px-4 py-2 bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-slate-100 transition">
+                Администрирование
+              </Button>
+            </Link>
+          )}
         </div>
       )}
       {status === "unauthenticated" && (
