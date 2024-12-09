@@ -2,7 +2,9 @@
 
 import { FormEvent, useState } from "react";
 import { signIn } from "next-auth/react";
-import { Button, Field, Fieldset, Input, Legend } from "@headlessui/react";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
+import { Field, Fieldset, Legend } from "@headlessui/react";
 import { HiExclamationTriangle } from "react-icons/hi2";
 import { useRouter } from "next/navigation";
 
@@ -14,7 +16,7 @@ const Auth = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!/.+@.+\..+/.test(email)) return setError("Невалидный email");
+
     const res = await signIn("credentials", {
       email,
       password,
@@ -26,23 +28,24 @@ const Auth = () => {
       setError("Неверный пароль");
     else if (res?.error && res?.code === "UserNotFound")
       setError("Пользователь не найден");
+    else if (res?.error && res?.code === "ValidationError")
+      setError("Ошибка валидации");
     else if (res?.error) setError("Что то пошло не так");
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="shadow-xl max-w-96 mx-auto p-8 rounded-lg bg-slate-300"
-    >
+    <form onSubmit={handleSubmit} className="max-w-96 mx-auto p-8">
       <Fieldset className="flex flex-col gap-4">
-        <Legend className="text-2xl font-bold text-center">Вход</Legend>
+        <Legend className="text-4xl font-light tracking-widest uppercase text-amber-950 text-center">
+          Вход
+        </Legend>
         <Field>
           <Input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             name="email"
             placeholder="Email"
-            className="w-full border-slate-400 border focus:outline focus:outline-slate-800 rounded-md py-2 px-4"
+            className="w-full"
           />
         </Field>
         <Field>
@@ -52,11 +55,11 @@ const Auth = () => {
             name="password"
             type="password"
             placeholder="Пароль"
-            className="w-full border-slate-400 border focus:outline focus:outline-slate-800 rounded-md py-2 px-4"
+            className="w-full"
           />
         </Field>
         {error && (
-          <div className="border border-red-600 rounded-md p-2 text-red-600 bg-red-100 flex gap-2 items-center">
+          <div className="border border-red-600 p-2 text-red-600 bg-red-100 flex gap-2 items-center">
             <HiExclamationTriangle className="text-2xl" />
             {error}
           </div>

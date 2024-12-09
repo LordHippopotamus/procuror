@@ -1,6 +1,6 @@
 import { auth } from "@/auth";
 import { prisma } from "@/prisma";
-import { Button } from "@headlessui/react";
+import Button from "@/components/ui/Button";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import DeleteButton from "./DeleteButton";
@@ -14,22 +14,20 @@ const Document = async ({ params }: { params: Promise<{ id: string }> }) => {
 
   return (
     <>
-      <h1 className="text-2xl font-bold">{document.title}</h1>
+      <h1 className="text-2xl uppercase text-amber-950 text-center">
+        {document.title}
+      </h1>
       <div
         className="my-4"
         dangerouslySetInnerHTML={{ __html: document.content }}
       />
       <div className="flex justify-between items-center">
-        <span className="font-bold tracking-widest">
-          {document.timestamp.toLocaleDateString()}
-        </span>
+        <span>{document.timestamp.toLocaleDateString()}</span>
         {session?.user && (
           <div className="flex gap-2">
             <DeleteButton id={id} />
             <Link href={`/${id}/edit`}>
-              <Button className="px-4 py-2 rounded-md bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-slate-100 transition">
-                Изменить
-              </Button>
+              <Button>Изменить</Button>
             </Link>
           </div>
         )}

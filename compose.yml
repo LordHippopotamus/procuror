@@ -1,0 +1,22 @@
+name: procuror
+
+services:
+  frontend:
+    build: ./
+    ports:
+      - 4070:3000
+    depends_on:
+      - postgres
+
+  postgres:
+    image: "postgres:17.2-alpine3.20"
+    environment:
+      - POSTGRES_PASSWORD=${PGPASSWORD}
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - 5435:5432
+
+volumes:
+  pg-data:

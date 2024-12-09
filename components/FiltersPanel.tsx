@@ -1,6 +1,7 @@
 "use client";
 
-import { Field, Fieldset, Input, Label, Legend } from "@headlessui/react";
+import Input from "@/components/ui/Input";
+import { Field, Fieldset, Label } from "@headlessui/react";
 import { usePathname, useSearchParams, useRouter } from "next/navigation";
 import { ChangeEvent, ChangeEventHandler } from "react";
 
@@ -37,8 +38,7 @@ const FiltersPanel = () => {
 
   return (
     <nav>
-      <Fieldset className="bg-slate-300 shadow-xl rounded-lg mx-auto p-4">
-        <Legend className="text-xl font-bold">Фильтры</Legend>
+      <Fieldset className="mx-auto">
         <div className="flex gap-2 flex-wrap">
           <Field className="flex flex-col grow">
             <Label>Название</Label>
@@ -46,7 +46,6 @@ const FiltersPanel = () => {
               name="title"
               onChange={handleChange}
               defaultValue={searchParams.get("title") || ""}
-              className="border-slate-400 rounded-md px-4 py-2 border bg-white focus:outline focus:outline-slate-800"
             />
           </Field>
           <Field className="flex flex-col">
@@ -56,7 +55,6 @@ const FiltersPanel = () => {
               onChange={handleChange}
               type="date"
               defaultValue={searchParams.get("dateMin") || ""}
-              className="border-slate-400 rounded-md px-4 py-2 border bg-white focus:outline focus:outline-slate-800"
             />
           </Field>
           <Field className="flex flex-col">
@@ -66,7 +64,6 @@ const FiltersPanel = () => {
               onChange={handleChange}
               type="date"
               defaultValue={searchParams.get("dateMax") || ""}
-              className="border-slate-400 rounded-md px-4 py-2 border bg-white focus:outline focus:outline-slate-800"
             />
           </Field>
         </div>

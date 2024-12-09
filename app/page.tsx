@@ -3,7 +3,28 @@ import Link from "next/link";
 import FiltersPanel from "@/components/FiltersPanel";
 import Pagination from "@/components/Pagination";
 import { auth } from "@/auth";
-import { Button } from "@headlessui/react";
+import Button from "@/components/ui/Button";
+
+function getStringWithNoun(
+  number: number,
+  one: string,
+  two: string,
+  five: string
+) {
+  let n = Math.abs(number);
+  n %= 100;
+  if (n >= 5 && n <= 20) {
+    return five;
+  }
+  n %= 10;
+  if (n === 1) {
+    return one;
+  }
+  if (n >= 2 && n <= 4) {
+    return two;
+  }
+  return five;
+}
 
 const Home = async (props: {
   searchParams: Promise<{
@@ -44,43 +65,40 @@ const Home = async (props: {
   return (
     <>
       <div className="mb-4 flex flex-col justify-end">
-        <h2 className="font-bold text-4xl">Документы</h2>
-        {count % 10 === 1 && (
-          <span>
-            Найден <b>{count}</b> документ
-          </span>
-        )}
-        {count % 10 >= 2 && count % 10 <= 4 && (
-          <span>
-            Найдено <b>{count}</b> документа
-          </span>
-        )}
-        {(count % 10 >= 5 && count % 10 <= 9) ||
-          (count % 10 == 0 && (
-            <span>
-              Найдено <b>{count}</b> документов
-            </span>
-          ))}
+        <h2 className="font-light text-4xl text-amber-950 uppercase tracking-widest">
+          Новости
+        </h2>
+        <span>
+          {getStringWithNoun(
+            count,
+            `Найдена ${count} новость`,
+            `Найдено ${count} новости`,
+            `Найдено ${count} новостей`
+          )}
+        </span>
       </div>
+
       <FiltersPanel />
       {session?.user && (
         <Link href="/create">
-          <Button className="mt-4 p-4 bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-slate-100 transition rounded w-full">
-            Создать документ
-          </Button>
+          <Button className="my-4 w-full">Создать документ</Button>
         </Link>
       )}
       {!count && (
-        <p className="font-bold text-lg mt-4 text-center">
+        <p className="font-bold text-lg mt-4 text-center text-amber-950 uppercase">
           По вашему запросу ничего не найдено
         </p>
       )}
-      <ul className="flex flex-col gap-2 my-4">
+      <ul className="flex flex-col gap-4 my-4">
         {documents.map((el) => (
           <Link href={"/" + el.id} key={el.id}>
-            <li className="bg-slate-200 shadow-xl p-4 rounded-lg hover:bg-slate-300 active:bg-slate-400 cursor-pointer">
-              <h3>{el.title}</h3>
-              <span className="font-bold tracking-widest">
+            <li className="cursor-pointer">
+              <h3 className="font-bold text-amber-950 uppercase">
+                {el.title.length > 160
+                  ? el.title.slice(1, 157) + "..."
+                  : el.title}
+              </h3>
+              <span className="text-sm">
                 {el.timestamp.toLocaleDateString()}
               </span>
             </li>

@@ -2,6 +2,8 @@ import { auth } from "@/auth";
 import { prisma } from "@/prisma";
 import { redirect } from "next/navigation";
 import { createUser } from "./actions";
+import Input from "@/components/ui/Input";
+import Button from "@/components/ui/Button";
 
 export const dynamic = "force-dynamic";
 
@@ -15,28 +17,17 @@ const dashboard = async () => {
 
   return (
     <>
-      <h1 className="text-2xl font-black">Панель Управления</h1>
+      <h1 className="text-4xl font-light tracking-widest text-amber-900 uppercase text-center">
+        Панель Управления
+      </h1>
       <form action={createUser} className="mt-4">
-        <h2 className="text-xl font-bold">Создание пользователя</h2>
         <div className="flex gap-2 mt-2">
-          <input
-            className="border border-slate-400 p-2 rounded-md focus:outline focus:outline-slate-800"
-            name="email"
-            placeholder="Email"
-          />
-          <input
-            className="border border-slate-400 p-2 rounded-md focus:outline focus:outline-slate-800"
-            name="password"
-            type="password"
-            placeholder="Пароль"
-          />
-          <button className="bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-slate-100 px-4 py-2 rounded-md transition">
-            Создать
-          </button>
+          <Input name="email" placeholder="Email" />
+          <Input name="password" type="password" placeholder="Пароль" />
+          <Button type="submit">Создать</Button>
         </div>
       </form>
       <ul>
-        <h2 className="text-xl font-bold mt-2">Список пользователей</h2>
         {users.map((el) => (
           <li key={el.id}>{el.email}</li>
         ))}

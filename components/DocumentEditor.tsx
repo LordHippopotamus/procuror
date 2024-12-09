@@ -1,11 +1,6 @@
-import {
-  Fieldset,
-  Input,
-  Legend,
-  Field,
-  Label,
-  Textarea,
-} from "@headlessui/react";
+import { Fieldset, Legend, Field, Label, Textarea } from "@headlessui/react";
+import Button from "@/components/ui/Button";
+import Input from "@/components/ui/Input";
 
 const DocumentEditor = ({
   formAction,
@@ -17,22 +12,20 @@ const DocumentEditor = ({
   return (
     <form action={formAction}>
       <Fieldset className="flex flex-col gap-2">
-        <Legend className="text-2xl font-bold">Редактирование документа</Legend>
+        <Legend className="text-4xl font-light tracking-widest uppercase text-center text-amber-950">
+          Редактирование документа
+        </Legend>
 
         <Field className="flex flex-col">
           <Label>Название</Label>
-          <Input
-            name="title"
-            defaultValue={defaultValues.title}
-            className="border border-slate-400 focus:outline focus:outline-slate-800 p-2 rounded-md"
-          />
+          <Input name="title" defaultValue={defaultValues.title} />
         </Field>
         <Field className="flex flex-col">
           <Label>Содержимое</Label>
           <Textarea
             name="content"
             defaultValue={defaultValues.content}
-            className="border border-slate-400 focus:outline focus:outline-slate-800 p-2 rounded-md min-h-36 max-h-screen"
+            className="border border-blue-400 p-2 min-h-36 max-h-screen"
           />
         </Field>
         <Field className="flex flex-col">
@@ -43,14 +36,12 @@ const DocumentEditor = ({
             defaultValue={defaultValues.timestamp
               .toISOString()
               .substring(0, 10)}
-            className="border border-slate-400 focus:outline focus:outline-slate-800 p-2 rounded-md"
           />
         </Field>
-        <div className="flex gap-2">
-          <button className="px-4 py-2 rounded-md bg-slate-900 hover:bg-slate-800 active:bg-slate-700 text-slate-100 transition">
-            Сохранить
-          </button>
-        </div>
+
+        <Button className="ml-auto mt-2" type="submit">
+          Сохранить
+        </Button>
       </Fieldset>
     </form>
   );

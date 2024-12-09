@@ -13,6 +13,10 @@ class InvalidPasswordError extends CredentialsSignin {
   code = "InvalidPassword";
 }
 
+class ValidationError extends CredentialsSignin {
+  code = "ValidationError";
+}
+
 export default {
   providers: [
     Credentials({
@@ -21,10 +25,9 @@ export default {
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const { email, password } = await v.parseAsync(
-          CreadentialsSchema,
-          credentials
-        );
+        const res = await v.safeParseAsync(CreadentialsSchema, credentials);
+        if (!res.success) throw new ValidationError();
+        const { email, password } = res.output;
 
         const user = await prisma.user.findUnique({ where: { email } });
         if (!user) throw new UserNotFountError();

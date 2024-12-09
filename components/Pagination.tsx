@@ -46,10 +46,10 @@ const Pagination = ({ maxPages }: { maxPages: number }) => {
       <button
         disabled={page <= 1}
         onClick={prevPage}
-        className={`p-4 rounded-md transition shadow-xl ${
+        className={`p-3 rounded-md transition ${
           page <= 1
-            ? "text-slate-400"
-            : "bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+            ? "text-blue-500 bg-blue-300"
+            : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white"
         }`}
       >
         <HiChevronLeft />
@@ -58,10 +58,10 @@ const Pagination = ({ maxPages }: { maxPages: number }) => {
       <button
         disabled={page >= maxPages}
         onClick={nextPage}
-        className={`p-4 rounded-md transition shadow-xl ${
+        className={`p-3 rounded-md transition ${
           page >= maxPages
-            ? "text-slate-400"
-            : "bg-slate-200 hover:bg-slate-300 active:bg-slate-400"
+            ? "text-blue-500 bg-blue-300"
+            : "bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white"
         }`}
       >
         <HiChevronRight />
