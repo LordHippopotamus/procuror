@@ -49,7 +49,7 @@ const FiltersPanel = () => {
             />
           </Field>
           <Field className="flex flex-col">
-            <Label>После</Label>
+            <Label>С</Label>
             <Input
               name="dateMin"
               onChange={handleChange}
@@ -58,7 +58,7 @@ const FiltersPanel = () => {
             />
           </Field>
           <Field className="flex flex-col">
-            <Label>До</Label>
+            <Label>По</Label>
             <Input
               name="dateMax"
               onChange={handleChange}

@@ -99,7 +99,7 @@ const Home = async (props: {
                   : el.title}
               </h3>
               <span className="text-sm">
-                {el.timestamp.toLocaleDateString()}
+                {el.timestamp.toLocaleDateString("ru-RU")}
               </span>
             </li>
           </Link>
